@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Validation</title>
+    <style>
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+        .error-border {
+            border: 2px solid red;
+        }
+        th{
+            font-weight: lighter;
+        }
+        tr{
+            height: 40px;
+        }
+        textarea{
+            width: 200px;
+            height: 80px;
+        }
+        table{
+            margin: auto;
+        }
+    </style>
+    <script>
+                function validateForm() {
+            var isValid = true;
+
+            var name = document.getElementById('name');
+            var email = document.getElementById('email');
+            var website = document.getElementById('website');
+            var message = document.getElementById('message');
+
+            // Clear previous error messages and borders
+            document.getElementById('nameError').innerHTML = '';
+            document.getElementById('emailError').innerHTML = '';
+            document.getElementById('websiteError').innerHTML = '';
+            document.getElementById('messageError').innerHTML = '';
+            name.classList.remove('error-border');
+            email.classList.remove('error-border');
+            website.classList.remove('error-border');
+            message.classList.remove('error-border');
+
+            if (name.value === '') {
+                document.getElementById('nameError').innerHTML = 'This field is required';
+                name.classList.add('error-border');
+                isValid = false;
+            }
+            if (email.value === '') {
+                document.getElementById('emailError').innerHTML = 'A valid email address is required';
+                email.classList.add('error-border');
+                isValid = false;
+            } else if (!validateEmail(email.value)) {
+                document.getElementById('emailError').innerHTML = 'Please enter a valid email address';
+                email.classList.add('error-border');
+                isValid = false;
+            }
+            if (website.value === '') {
+                document.getElementById('websiteError').innerHTML = 'A valid URL is required';
+                website.classList.add('error-border');
+                isValid = false;
+            } else if (!validateURL(website.value)) {
+                document.getElementById('websiteError').innerHTML = 'Please enter a valid URL';
+                website.classList.add('error-border');
+                isValid = false;
+            }
+            if (message.value === '') {
+                document.getElementById('messageError').innerHTML = 'This field is required';
+                message.classList.add('error-border');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function validateEmail(email) {
+            var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validateURL(url) {
+            var re = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/;
+            return re.test(url);
+        }
+
+
+    </script>
+</head>
+<body>
+<table>
+    <form id="myForm" onsubmit="return validateForm()">
+        <tr>
+        <th><label for="name">Name:</label></th>
+        <td><input type="text" id="name" name="name"></td>
+        <td><span id="nameError" class="error"></span></td>
+        </tr> 
+  
+        <tr>
+        <th><label for="email">Email:</label></th>
+        <td><input type="text" id="email" name="email"></td>
+        <td><span id="emailError" class="error"></span></td>
+        </tr>
+    
+        <tr>
+        <th><label for="website">Website:</label></th>
+        <td><input type="text" id="website" name="website"></td>
+        <td><span id="websiteError" class="error"></span></td>
+        </tr>
+        
+        <tr>
+        <th><label for="message">Message:</label></th>
+        <td><textarea id="message" name="message"></textarea></td>
+        <td><span id="messageError" class="error"></span></td>
+        </tr>
+
+        <tr>
+            <th><input type="submit" value="Submit"></th>
+        </tr>   
+        
+    </form>
+</table>
+</body>
+</html>
